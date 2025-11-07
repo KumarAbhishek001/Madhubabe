@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ff4081" d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402m5.726-20.583c-2.203 0-4.446 1.042-5.726 3.238-1.285-2.206-3.522-3.248-5.719-3.248-3.183 0-6.281 2.187-6.281 6.191 0 4.661 5.571 9.429 12 15.809 6.43-6.38 12-11.148 12-15.809 0-4.011-3.095-6.181-6.274-6.181"/></svg>'), auto;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+            overflow-x: hidden;
+            color: #5a3d5c;
+            scroll-behavior: smooth;
+        }
+        
+        .handwriting {
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff4081;
+            transform: rotate(45deg);
+            animation: float 6s ease-in-out infinite;
+            z-index: 0;
+        }
+        
+        .heart:before, .heart:after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: #ff4081;
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+        
+        .heart:after {
+            top: 0;
+            left: -10px;
+        }
+        
+        .firefly {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff9c4;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px #fff9c4;
+            animation: glow 3s ease-in-out infinite, fly 15s linear infinite;
+            z-index: 0;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(45deg); }
+            50% { transform: translateY(-20px) rotate(45deg); }
+        }
+        
+        @keyframes glow {
+            0%, 100% { opacity: 0.2; box-shadow: 0 0 5px 2px #fff9c4; }
+            50% { opacity: 1; box-shadow: 0 0 15px 5px #fff9c4; }
+        }
+        
+        @keyframes fly {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(100px, 100px); }
+            50% { transform: translate(50px, 200px); }
+            75% { transform: translate(-50px, 150px); }
+            100% { transform: translate(0, 0); }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 2s ease-in forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            white-space: normal;
+            margin: 0 auto;
+        }
+        
+        .heart-pop {
+            animation: heartPop 1s ease-out forwards;
+        }
+        
+        @keyframes heartPop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .carousel-item {
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        .carousel-item.active {
+            opacity: 1;
+        }
+        
+        .carousel-item:not(.active) {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .photo-frame {
+            border: 8px solid white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+        
+        .love-meter {
+            height: 20px;
+            background: linear-gradient(to right, #ff4081, #ff79a6);
+            border-radius: 10px;
+            transition: width 2s ease-in-out;
+        }
+        
+        .section-container {
+            position: relative;
+            z-index: 10;
+        }
+        
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            color: #ff4081;
+            animation: floatUp 8s linear infinite;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-dot.active {
+            background-color: #ff4081;
+            transform: scale(1.3);
+        }
+        
+        .gallery-item {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Background elements -->
+    <div id="hearts-container"></div>
+    <div id="fireflies-container"></div>
+    
+    <!-- Music Toggle -->
+    <!-- <div class="fixed top-4 right-4 z-50">
+        <button id="music-toggle" class="bg-white/80 backdrop-blur-sm rounded-full p-3 shadow-lg hover:bg-white transition-all">
+            <i class="fas fa-music text-pink-500 text-xl"></i>
+        </button>
+        <audio id="bg-music" loop>
+            <source src="https://assets.codepen.io/1468070/romantic-piano.mp3" type="audio/mpeg">
+        </audio>
+    </div> -->
+    
+    <!-- Navigation Dots -->
+    <div class="fixed right-6 top-1/2 transform -translate-y-1/2 z-40 flex flex-col space-y-4">
+        <div class="nav-dot active" data-section="landing"></div>
+        <div class="nav-dot" data-section="memories"></div>
+        <div class="nav-dot" data-section="reasons"></div>
+        <div class="nav-dot" data-section="gallery"></div>
+        <div class="nav-dot" data-section="letter"></div>
+        <div class="nav-dot" data-section="surprise"></div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-12 max-w-4xl section-container">
+        <!-- Landing Section -->
+        <section id="landing" class="min-h-screen flex flex-col justify-center items-center text-center mb-20">
+            <h1 class="text-4xl md:text-6xl font-bold mb-8 text-pink-600 fade-in handwriting">Hi Madhu Babe ❤️</h1>
+            <p class="text-xl md:text-2xl mb-12 text-gray-700 fade-in">this website is made just for you.</p>
+            <div id="sunshine-text" class="text-2xl md:text-4xl text-pink-500 mt-12 opacity-0 handwriting">You're my sunshine, my peace, and my favorite person in the world.</div>
+            
+            <!-- Scroll indicator -->
+            <div class="mt-16 animate-bounce">
+                <i class="fas fa-chevron-down text-2xl text-pink-500"></i>
+            </div>
+        </section>
+        
+        <!-- Our Memories Section -->
+        <section id="memories" class="mb-20">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-pink-600 handwriting">Our Special Memory</h2>
+            <div class="relative h-80 md:h-96 rounded-2xl overflow-hidden shadow-xl bg-white/50 backdrop-blur-sm">
+                <div class="carousel-item active">
+                    <div class="h-full w-full flex items-center justify-center">
+                        <img src="4.jpg" 
+                             alt="Our special moment" class="h-full w-full object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-white">
+                            <p class="text-xl md:text-2xl handwriting">Our special moment together</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Reasons I Love You Section -->
+        <section id="reasons" class="mb-20">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-pink-600 handwriting">Reasons I Love You</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="text-center">
+                        <i class="fas fa-smile text-4xl text-pink-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-pink-600 mb-2">Your smile</h3>
+                        <p class="text-gray-700">It brightens my darkest days and fills my heart with joy.</p>
+                    </div>
+                </div>
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="text-center">
+                        <i class="fas fa-heart text-4xl text-pink-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-pink-600 mb-2">Your kindness</h3>
+                        <p class="text-gray-700">The way you care for others inspires me every day.</p>
+                    </div>
+                </div>
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="text-center">
+                        <i class="fas fa-music text-4xl text-pink-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-pink-600 mb-2">Your voice</h3>
+                        <p class="text-gray-700">Hearing you speak is my favorite sound in the world.</p>
+                    </div>
+                </div>
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="text-center">
+                        <i class="fas fa-laugh text-4xl text-pink-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-pink-600 mb-2">Your laughter</h3>
+                        <p class="text-gray-700">It's contagious and makes everything better.</p>
+                    </div>
+                </div>
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="text-center">
+                        <i class="fas fa-hands-helping text-4xl text-pink-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-pink-600 mb-2">Your support</h3>
+                        <p class="text-gray-700">You always believe in me, even when I doubt myself.</p>
+                    </div>
+                </div>
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="text-center">
+                        <i class="fas fa-brain text-4xl text-pink-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-pink-600 mb-2">Your mind</h3>
+                        <p class="text-gray-700">You're intelligent and thoughtful in everything you do.</p>
+                    </div>
+                </div>
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="text-center">
+                        <i class="fas fa-hand-holding-heart text-4xl text-pink-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-pink-600 mb-2">Your compassion</h3>
+                        <p class="text-gray-700">You feel deeply and care genuinely for everyone.</p>
+                    </div>
+                </div>
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="text-center">
+                        <i class="fas fa-sun text-4xl text-pink-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-pink-600 mb-2">Your positivity</h3>
+                        <p class="text-gray-700">You always find the silver lining in any situation.</p>
+                    </div>
+                </div>
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="text-center">
+                        <i class="fas fa-eye text-4xl text-pink-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-pink-600 mb-2">Your eyes</h3>
+                        <p class="text-gray-700">They tell stories and hold galaxies I want to explore.</p>
+                    </div>
+                </div>
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg card-hover md:col-span-2 lg:col-span-3">
+                    <div class="text-center">
+                        <i class="fas fa-infinity text-4xl text-pink-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-pink-600 mb-2">Everything about you</h3>
+                        <p class="text-gray-700">Every little thing makes you uniquely wonderful, and I love all of it.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Love Meter Section -->
+        <section class="mb-20">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-pink-600 handwriting">Our Love Meter</h2>
+            <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+                <div class="text-center mb-6">
+                    <p class="text-xl text-gray-700 mb-4">How much do I love you Madhu?</p>
+                    <div class="w-full bg-gray-200 rounded-full h-6 mb-4">
+                        <div id="love-meter" class="love-meter h-6 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <p id="love-percentage" class="text-2xl text-pink-600 font-bold">0%</p>
+                </div>
+                <button id="measure-love" class="bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:from-pink-600 hover:to-purple-600 transition-all transform hover:scale-105 block mx-auto">
+                    Measure Our Love
+                </button>
+            </div>
+        </section>
+        
+        <!-- Our Memories Gallery Section -->
+        <section id="gallery" class="mb-20">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-pink-600 handwriting">Our Beautiful Memories</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="gallery-item">
+                    <div class="overflow-hidden rounded-t-xl">
+                        <img src="11.jpg" 
+                             alt="Memory 1" class="gallery-img">
+                    </div>
+                    <div class="bg-white p-4 rounded-b-xl">
+                        <p class="text-center text-pink-600 font-semibold">My Buggu</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="overflow-hidden rounded-t-xl">
+                        <img src="6.jpg" 
+                             alt="Memory 2" class="gallery-img">
+                    </div>
+                    <div class="bg-white p-4 rounded-b-xl">
+                        <p class="text-center text-pink-600 font-semibold">My Sona</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="overflow-hidden rounded-t-xl">
+                        <img src="5.jpg" 
+                             alt="Memory 3" class="gallery-img">
+                    </div>
+                    <div class="bg-white p-4 rounded-b-xl">
+                        <p class="text-center text-pink-600 font-semibold">My Kuchupuchuuuuuu</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="overflow-hidden rounded-t-xl">
+                        <img src="10.jpg" 
+                             alt="Memory 4" class="gallery-img">
+                    </div>
+                    <div class="bg-white p-4 rounded-b-xl">
+                        <p class="text-center text-pink-600 font-semibold">My billu badmosh</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="overflow-hidden rounded-t-xl">
+                        <img src="7.jpg" 
+                             alt="Memory 5" class="gallery-img">
+                    </div>
+                    <div class="bg-white p-4 rounded-b-xl">
+                        <p class="text-center text-pink-600 font-semibold">my babydoll</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="overflow-hidden rounded-t-xl">
+                        <img src="1.jpg" 
+                             alt="Memory 6" class="gallery-img">
+                    </div>
+                    <div class="bg-white p-4 rounded-b-xl">
+                        <p class="text-center text-pink-600 font-semibold">my sexy gurl</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- A Love Letter Section -->
+        <section id="letter" class="mb-20">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-pink-600 handwriting">A Love Letter</h2>
+            <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+                <div class="handwriting text-lg md:text-xl text-gray-800 leading-relaxed">
+                    <p class="mb-4">My Dearest Madhu,</p>
+                    <p class="mb-4" id="typed-text"></p>
+                    <p class="text-right mt-8">With all my love,</p>
+                    <p class="text-right">Always and forever</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Surprise Section -->
+        <section id="surprise" class="mb-20 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-pink-600 handwriting">Surprise for You 💋</h2>
+            <button id="surprise-btn" class="bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xl font-semibold py-4 px-8 rounded-full shadow-lg hover:from-pink-600 hover:to-purple-600 transition-all transform hover:scale-105">
+                Click for a Surprise!
+            </button>
+            <div id="surprise-content" class="mt-12 hidden">
+                <div class="heart-pop flex justify-center mb-8">
+                    <i class="fas fa-heart text-8xl text-pink-500"></i>
+                </div>
+                <p class="text-2xl md:text-3xl text-pink-600 handwriting">You deserve all the love in the world Madhu! Now give me my kiss 😘</p>
+                <div id="floating-hearts" class="floating-hearts"></div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="text-center py-8 border-t border-pink-200 mt-12">
+            <p class="text-2xl md:text-3xl text-pink-600 handwriting">Forever yours, Abhishek 💞</p>
+            <p class="text-gray-600 mt-4">Made with <i class="fas fa-heart text-pink-500"></i> for my beautiful Madhu</p>
+        </footer>
+    </div>
+
+    <script>
+        // Background animations
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.opacity = Math.random() * 0.5 + 0.3;
+                container.appendChild(heart);
+            }
+        }
+        
+        function createFireflies() {
+            const container = document.getElementById('fireflies-container');
+            for (let i = 0; i < 20; i++) {
+                const firefly = document.createElement('div');
+                firefly.classList.add('firefly');
+                firefly.style.left = Math.random() * 100 + 'vw';
+                firefly.style.top = Math.random() * 100 + 'vh';
+                firefly.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(firefly);
+            }
+        }
+        
+        // Love meter animation
+        function animateLoveMeter() {
+            const loveMeter = document.getElementById('love-meter');
+            const lovePercentage = document.getElementById('love-percentage');
+            let width = 0;
+            const targetWidth = 100;
+            const interval = setInterval(() => {
+                if (width >= targetWidth) {
+                    clearInterval(interval);
+                } else {
+                    width++;
+                    loveMeter.style.width = width + '%';
+                    lovePercentage.innerHTML = width + '%';
+                }
+            }, 30);
+        }
+        
+        // Create floating hearts animation
+        function createFloatingHearts(count) {
+            const container = document.getElementById('floating-hearts') || document.body;
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('floating-heart');
+                    heart.innerHTML = '❤️';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                    container.appendChild(heart);
+                    
+                    // Remove heart after animation completes
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 8000);
+                }, i * 200);
+            }
+        }
+        
+        // Navigation dots functionality
+        function setupNavigation() {
+            const dots = document.querySelectorAll('.nav-dot');
+            const sections = document.querySelectorAll('section');
+            
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const sectionId = dot.getAttribute('data-section');
+                    const section = document.getElementById(sectionId);
+                    
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+            
+            // Update active dot on scroll
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (scrollY >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                dots.forEach(dot => {
+                    dot.classList.remove('active');
+                    if (dot.getAttribute('data-section') === current) {
+                        dot.classList.add('active');
+                    }
+                });
+            });
+        }
+        
+        // Text animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create background elements
+            createHearts();
+            createFireflies();
+            
+            // Setup navigation
+            setupNavigation();
+            
+            // Fade in the second text
+            setTimeout(() => {
+                document.getElementById('sunshine-text').classList.remove('opacity-0');
+                document.getElementById('sunshine-text').classList.add('fade-in');
+            }, 2000);
+            
+            // Typewriter effect for love letter
+            const loveLetterText = "From the moment I met you, my life changed in ways I never imagined possible. You've brought so much light, laughter, and love into my world. Every day with you feels like a beautiful dream I never want to wake up from. Your smile is my favorite sight, your voice my favorite sound, and your heart my safest place. I promise to cherish you, support you, and love you more with each passing day. You are my everything Madhu.";
+            
+            function typeWriter() {
+                const typedText = document.getElementById("typed-text");
+                let i = 0;
+                
+                function type() {
+                    if (i < loveLetterText.length) {
+                        typedText.innerHTML += loveLetterText.charAt(i);
+                        i++;
+                        setTimeout(type, 50);
+                    }
+                }
+                
+                type();
+            }
+            
+            // Start typing when the section is in view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        typeWriter();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            observer.observe(document.querySelector('#typed-text').parentElement);
+            
+            // Love meter button
+            document.getElementById('measure-love').addEventListener('click', () => {
+                animateLoveMeter();
+                createFloatingHearts(10);
+            });
+            
+            // Surprise button
+            document.getElementById('surprise-btn').addEventListener('click', () => {
+                document.getElementById('surprise-content').classList.remove('hidden');
+                document.getElementById('surprise-content').classList.add('fade-in');
+                
+                // Create floating hearts animation
+                createFloatingHearts(20);
+            });
+            
+            // Music toggle
+            const musicToggle = document.getElementById('music-toggle');
+            const bgMusic = document.getElementById('bg-music');
+            let musicPlaying = false;
+            
+            // Try to play music automatically (with user interaction)
+            document.body.addEventListener('click', function initMusic() {
+                if (!musicPlaying) {
+                    bgMusic.play().catch(e => console.log("Audio play failed:", e));
+                    musicPlaying = true;
+                    musicToggle.innerHTML = '<i class="fas fa-pause text-pink-500 text-xl"></i>';
+                }
+                document.body.removeEventListener('click', initMusic);
+            });
+            
+            musicToggle.addEventListener('click', () => {
+                if (musicPlaying) {
+                    bgMusic.pause();
+                    musicToggle.innerHTML = '<i class="fas fa-music text-pink-500 text-xl"></i>';
+                } else {
+                    bgMusic.play().catch(e => console.log("Audio play failed:", e));
+                    musicToggle.innerHTML = '<i class="fas fa-pause text-pink-500 text-xl"></i>';
+                }
+                musicPlaying = !musicPlaying;
+            });
+        });
+    </script>
+</body>
+</html>
